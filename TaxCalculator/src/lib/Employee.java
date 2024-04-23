@@ -32,11 +32,9 @@ public class Employee extends Information{
 	//Data Anak
 	private List<Information> child;
 	
-	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, Date dayJoined, boolean isForeigner, JenisKelamin gender) {
+	public Employee(String employeeId, Information informasi, String address, Date dayJoined, boolean isForeigner, JenisKelamin gender) {
 		this.employeeId = employeeId;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.idNumber = idNumber;
+		this.Information = informasi;
 		this.address = address;
 		this.dayJoined = dayJoined;
 		this.isForeigner = isForeigner;
