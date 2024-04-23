@@ -15,30 +15,31 @@ public class TaxFunction {
 	 */
 	
 	
-	public static int calculateTax(int monthlySalary, int otherMonthlyIncome, int numberOfMonthWorking, int deductible, boolean isMarried, int numberOfChildren) {
-		
-		int tax = 0;
-		
-		if (numberOfMonthWorking > 12) {
-			System.err.println("More than 12 month working per year");
-		}
-		
-		if (numberOfChildren > 3) {
-			numberOfChildren = 3;
-		}
-		
-		if (isMarried) {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - (54000000 + 4500000 + (numberOfChildren * 1500000))));
-		}else {
-			tax = (int) Math.round(0.05 * (((monthlySalary + otherMonthlyIncome) * numberOfMonthWorking) - deductible - 54000000));
-		}
-		
-		if (tax < 0) {
-			return 0;
-		}else {
-			return tax;
-		}
-			 
-	}
+	 public static int calculateTax(Employee employee) {
+        int monthlyTaxableIncome = calculateMonthlyTaxableIncome(employee);
+        int annualDeductible = employee.getAnnualDeductible();
+        int numberOfMonthWorking = employee.getMonthWorkingInYear();
+
+        int tax = (int) Math.round(0.05 * (monthlyTaxableIncome * numberOfMonthWorking - annualDeductible));
+        return Math.max(tax, 0);
+    }
+
+    private static int calculateMonthlyTaxableIncome(Employee employee) {
+        int monthlySalary = employee.getMonthlySalary();
+        int otherMonthlyIncome = employee.getOtherMonthlyIncome();
+        int numberOfChildren = employee.getNumberOfChildren();
+
+        int nonTaxableIncome = calculateNonTaxableIncome(employee);
+        return monthlySalary + otherMonthlyIncome - nonTaxableIncome;
+    }
+
+    private static int calculateNonTaxableIncome(Employee employee) {
+        int nonTaxableIncome = 54000000;
+        if (employee.isMarried()) {
+            nonTaxableIncome += 4500000;
+        }
+        nonTaxableIncome += Math.min(employee.getNumberOfChildren(), 3) * 1500000;
+        return nonTaxableIncome;
+    }
 	
 }
