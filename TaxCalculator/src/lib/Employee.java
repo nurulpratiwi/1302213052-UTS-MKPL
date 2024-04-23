@@ -5,33 +5,32 @@ import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Employee {
+public class Employee extends Information{
 	private enum JenisKelamin{
 		Laki-laki,
 		Perempuan
 	}
-
-	private String employeeId;
-	private String firstName;
-	private String lastName;
-	private String idNumber;
-	private String address;
 	
+	//Data diri
+	private String employeeId;
+	private String address;
+	private boolean isForeigner;
+	private JenisKelamin gender;
+
+	//Data Join
 	private Date dayJoined;
 	private Date monthWorkingInYear;
 	
-	private boolean isForeigner;
-	private JenisKelamin gender;
-	
+	//Data pendapatan
 	private int monthlySalary;
 	private int otherMonthlyIncome;
 	private int annualDeductible;
 	
-	private String spouseName;
-	private String spouseIdNumber;
+	//Data pasangan
+	private Information Spouse;
 
-	private List<String> childNames;
-	private List<String> childIdNumbers;
+	//Data Anak
+	private List<Information> child;
 	
 	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, Date dayJoined, boolean isForeigner, JenisKelamin gender) {
 		this.employeeId = employeeId;
@@ -43,8 +42,7 @@ public class Employee {
 		this.isForeigner = isForeigner;
 		this.gender = gender;
 		
-		childNames = new LinkedList<String>();
-		childIdNumbers = new LinkedList<String>();
+		child = new LinkedList<Information>();
 	}
 	
 	/**
@@ -79,14 +77,12 @@ public class Employee {
 		this.otherMonthlyIncome = income;
 	}
 	
-	public void setSpouse(String spouseName, String spouseIdNumber) {
-		this.spouseName = spouseName;
-		this.spouseIdNumber = idNumber;
+	public void setSpouse(Information Spouse) {
+		this.Information = Spouse;
 	}
 	
-	public void addChild(String childName, String childIdNumber) {
-		childNames.add(childName);
-		childIdNumbers.add(childIdNumber);
+	public void addChild(Information child) {
+		child.add(Information);
 	}
 	
 	public int getAnnualIncomeTax() {
