@@ -5,46 +5,44 @@ import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Employee {
-
+public class Employee extends Information{
+	private enum JenisKelamin{
+		Laki-laki,
+		Perempuan
+	}
+	
+	//Data diri
 	private String employeeId;
-	private String firstName;
-	private String lastName;
-	private String idNumber;
 	private String address;
-	
-	private int yearJoined;
-	private int monthJoined;
-	private int dayJoined;
-	private int monthWorkingInYear;
-	
 	private boolean isForeigner;
-	private boolean gender; //true = Laki-laki, false = Perempuan
+	private JenisKelamin gender;
+
+	//Data Join
+	private Date dayJoined;
+	private Date monthWorkingInYear;
 	
+	//Data pendapatan
 	private int monthlySalary;
 	private int otherMonthlyIncome;
 	private int annualDeductible;
 	
-	private String spouseName;
-	private String spouseIdNumber;
+	//Data pasangan
+	private Information Spouse;
 
-	private List<String> childNames;
-	private List<String> childIdNumbers;
+	//Data Anak
+	private List<Information> child;
 	
-	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean gender) {
+	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, Date dayJoined, boolean isForeigner, JenisKelamin gender) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.idNumber = idNumber;
 		this.address = address;
-		this.yearJoined = yearJoined;
-		this.monthJoined = monthJoined;
 		this.dayJoined = dayJoined;
 		this.isForeigner = isForeigner;
 		this.gender = gender;
 		
-		childNames = new LinkedList<String>();
-		childIdNumbers = new LinkedList<String>();
+		child = new LinkedList<Information>();
 	}
 	
 	/**
@@ -79,14 +77,12 @@ public class Employee {
 		this.otherMonthlyIncome = income;
 	}
 	
-	public void setSpouse(String spouseName, String spouseIdNumber) {
-		this.spouseName = spouseName;
-		this.spouseIdNumber = idNumber;
+	public void setSpouse(Information Spouse) {
+		this.Information = Spouse;
 	}
 	
-	public void addChild(String childName, String childIdNumber) {
-		childNames.add(childName);
-		childIdNumbers.add(childIdNumber);
+	public void addChild(Information child) {
+		child.add(Information);
 	}
 	
 	public int getAnnualIncomeTax() {
@@ -94,7 +90,7 @@ public class Employee {
 		//Menghitung berapa lama pegawai bekerja dalam setahun ini, jika pegawai sudah bekerja dari tahun sebelumnya maka otomatis dianggap 12 bulan.
 		LocalDate date = LocalDate.now();
 		
-		if (date.getYear() == yearJoined) {
+		if (date.getYear() == dayJoined) {
 			monthWorkingInYear = date.getMonthValue() - monthJoined;
 		}else {
 			monthWorkingInYear = 12;
